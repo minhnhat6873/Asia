@@ -1,6 +1,7 @@
 import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
 import { PartyPopper, CheckCircle, ArrowRight } from "lucide-react";
+//alo
 
 const newMembers = [
   {
@@ -98,7 +99,7 @@ export default function ChaoMungPage() {
             Chào mừng thành viên mới! 🎉
           </h1>
           <p className="text-white/80 text-base max-w-xl mx-auto">
-            Bạn vừa gia nhập một gia đình tuyệt vời. Chúng tôi rất vui khi có
+            bạn vừa gia nhập một gia đình tuyệt vời. Chúng tôi rất vui khi có
             bạn đồng hành trên hành trình{" "}
             <strong className="text-[#f5c800]">Growing Together</strong> của
             Wana.
