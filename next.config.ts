@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export", // Enable static export for Render deployment
   images: {
+    unoptimized: true, // Required when using static export
     remotePatterns: [
       {
         protocol: "https",

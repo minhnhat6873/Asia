@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
@@ -14,7 +14,8 @@ import EmployeesHero from "./EmployeesHero";
 const allDepartments = departments;
 const allPositions = ["Tất cả chức vụ", ...Array.from(new Set(employees.map((employee) => employee.position)))];
 
-export default function EmployeesPage() {
+// Tách ra component riêng vì useSearchParams() cần Suspense boundary
+function EmployeesContent() {
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
   const [department, setDepartment] = useState(() => {
@@ -44,8 +45,7 @@ export default function EmployeesPage() {
   }, [search, department, position, newestFirst]);
 
   return (
-    <main className="min-h-screen bg-[#f7faf8]">
-      <Navbar />
+    <>
       <EmployeesHero />
       <div className="mx-auto max-w-[1440px] px-5 py-5 md:px-8 md:py-7">
         <EmployeeFilters
@@ -68,7 +68,19 @@ export default function EmployeesPage() {
           <EmployeeProfile employee={selected} />
         </div>
       </div>
+    </>
+  );
+}
+
+export default function EmployeesPage() {
+  return (
+    <main className="min-h-screen bg-[#f7faf8]">
+      <Navbar />
+      <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Đang tải...</div>}>
+        <EmployeesContent />
+      </Suspense>
       <Footer />
     </main>
   );
 }
+
