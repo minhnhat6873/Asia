@@ -1,289 +1,179 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { employees, departments } from "@/config/employees";
-import {
-  Search, ChevronDown, Phone, Mail, MapPin, Briefcase,
-  X, Cake, Calendar, ArrowRight
-} from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, ChevronDown, Grid2X2, Mail, Phone, Search, Users, X } from "lucide-react";
+import { departments, employees } from "@/config/employees";
 
-interface Props {
-  preview?: boolean;
-}
+const previewAvatars = [
+  "/assets/images/employee-4.png",
+  "/assets/images/employee-5.png",
+  "/assets/images/employee-6.png",
+  "/assets/images/employee-7.png",
+];
 
-export default function EmployeeSection({ preview = false }: Props) {
+export default function EmployeeSection() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
-  const [dept, setDept] = useState("Tất cả phòng ban");
-  const [selected, setSelected] = useState<typeof employees[0] | null>(null);
-  const [deptOpen, setDeptOpen] = useState(false);
+  const [department, setDepartment] = useState("Tất cả phòng ban");
+  const [departmentOpen, setDepartmentOpen] = useState(false);
+  const departmentMenuRef = useRef<HTMLDivElement>(null);
 
-  const filtered = employees.filter((e) => {
-    const matchSearch =
-      e.name.toLowerCase().includes(search.toLowerCase()) ||
-      e.department.toLowerCase().includes(search.toLowerCase()) ||
-      e.position.toLowerCase().includes(search.toLowerCase());
-    const matchDept = dept === "Tất cả phòng ban" || e.department === dept;
-    return matchSearch && matchDept;
-  });
+  const previewEmployees = employees.slice(0, 4);
 
-  const displayed = preview ? filtered.slice(0, 4) : filtered;
+  useEffect(() => {
+    if (!departmentOpen) return;
+
+    const closeWhenClickOutside = (event: MouseEvent) => {
+      if (!departmentMenuRef.current?.contains(event.target as Node)) {
+        setDepartmentOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeWhenClickOutside);
+    return () => document.removeEventListener("mousedown", closeWhenClickOutside);
+  }, [departmentOpen]);
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const params = new URLSearchParams();
+    if (search.trim()) params.set("search", search.trim());
+    if (department !== "Tất cả phòng ban") params.set("department", department);
+    const query = params.toString();
+    router.push(query ? `/employees?${query}` : "/employees");
+  };
 
   return (
-    <section className="py-14 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-
-        {preview ? (
-          /* ── PREVIEW LAYOUT (Home page) ── 2-column: left text | right cards */
-          <div className="flex flex-col lg:flex-row gap-10">
-
-            {/* LEFT: Big heading + button */}
-            <div className="lg:w-56 shrink-0 flex flex-col justify-between">
-              <div>
-                <p className="section-label mb-3">Con người Wana</p>
-                <h2 className="text-4xl font-black text-gray-900 leading-tight mb-4">
-                  Gặp gỡ<br />những thành<br />viên của<br />Wana
-                </h2>
-                {/* Green underline */}
-                <div className="w-10 h-1 bg-[#1a7a1a] rounded-full mb-6" />
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  Mỗi cá nhân là một mảnh ghép quan trọng tạo nên hành trình phát triển của Wana.
-                </p>
-              </div>
-              <div className="mt-8">
-                <Link
-                  href="/employees"
-                  className="inline-flex items-center gap-2 bg-[#0d5c0d] hover:bg-[#1a7a1a] text-white font-semibold text-sm px-6 py-3 rounded-full transition-all"
-                >
-                  Xem tất cả nhân viên <ArrowRight size={16} />
-                </Link>
-              </div>
+    <section className="bg-white py-10 md:py-14">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-col gap-9 lg:flex-row lg:gap-12">
+          <div className="flex max-w-sm shrink-0 flex-col justify-between lg:w-64">
+            <div>
+              <p className="section-label mb-3">Con người Á Châu</p>
+              <h2 className="text-4xl font-black leading-tight text-gray-900">
+                Gặp gỡ những thành viên của Á Châu
+              </h2>
+              <div className="my-6 h-1 w-10 rounded-full bg-[#1a7a1a]" />
+              <p className="text-sm leading-relaxed text-gray-500">
+                Mỗi cá nhân là một mảnh ghép quan trọng tạo nên hành trình phát triển của Á Châu.
+              </p>
             </div>
-
-            {/* RIGHT: Search bar + Employee cards */}
-            <div className="flex-1 min-w-0">
-              {/* Search + filter row */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="relative flex-1">
-                  <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Tìm kiếm theo tên, phòng ban, chức vụ..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#1a7a1a] focus:ring-1 focus:ring-[#1a7a1a]"
-                  />
-                </div>
-                {/* Dept filter */}
-                <div className="relative shrink-0">
-                  <button
-                    onClick={() => setDeptOpen(!deptOpen)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm border border-gray-200 rounded-xl hover:border-[#1a7a1a] bg-white transition-colors min-w-[160px]"
-                  >
-                    <span className="flex-1 text-left text-gray-700 truncate text-xs">{dept}</span>
-                    <ChevronDown size={13} className="text-gray-400 shrink-0" />
-                  </button>
-                  {deptOpen && (
-                    <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 w-52 py-1">
-                      {departments.map((d) => (
-                        <button
-                          key={d}
-                          onClick={() => { setDept(d); setDeptOpen(false); }}
-                          className={`w-full text-left px-4 py-2 text-xs hover:bg-green-50 hover:text-[#1a7a1a] transition-colors ${
-                            dept === d ? "text-[#1a7a1a] font-semibold bg-green-50" : "text-gray-700"
-                          }`}
-                        >
-                          {d}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Cards grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {displayed.map((emp) => (
-                  <EmployeeCard key={emp.id} emp={emp} onClick={() => setSelected(emp)} />
-                ))}
-              </div>
-            </div>
+            <Link
+              href="/employees"
+              className="mt-7 inline-flex w-fit items-center gap-2 rounded-full bg-[#0d5c0d] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1a7a1a]"
+            >
+              Xem tất cả nhân viên <ArrowRight size={16} />
+            </Link>
           </div>
-        ) : (
-          /* ── FULL PAGE LAYOUT ── */
-          <>
-            {/* Header row */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-              <div>
-                <p className="section-label mb-2">Con người Wana</p>
-                <h2 className="text-4xl font-black text-gray-900 leading-tight">
-                  Danh bạ nhân viên
-                </h2>
-                <div className="w-10 h-1 bg-[#1a7a1a] rounded-full mt-3" />
-              </div>
-              {/* Search + filter */}
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="relative">
-                  <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Tìm theo tên, phòng ban, chức vụ..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl w-72 focus:outline-none focus:border-[#1a7a1a]"
-                  />
+
+          <div className="min-w-0 flex-1">
+            <form onSubmit={handleSearch} className="mb-7 flex flex-col gap-4 xl:flex-row">
+              <div className="relative flex min-w-0 flex-1 items-center rounded-full border border-green-100 bg-white p-1.5 shadow-[0_8px_28px_rgba(22,122,74,0.10)] transition-shadow focus-within:shadow-[0_10px_32px_rgba(22,122,74,0.18)]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-50 text-[#087d3e]">
+                  <Search size={27} strokeWidth={2.5} />
                 </div>
-                <div className="relative">
+                <input
+                  type="search"
+                  placeholder="Tìm kiếm theo tên, phòng ban, chức vụ..."
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  className="min-w-0 flex-1 border-0 bg-transparent px-4 py-3 text-base text-gray-800 outline-none placeholder:text-gray-400"
+                />
+                {search && (
                   <button
-                    onClick={() => setDeptOpen(!deptOpen)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm border border-gray-200 rounded-xl hover:border-[#1a7a1a] bg-white transition-colors min-w-[180px]"
+                    type="button"
+                    onClick={() => setSearch("")}
+                    aria-label="Xóa từ khóa tìm kiếm"
+                    className="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200"
                   >
-                    <span className="flex-1 text-left text-gray-700 truncate">{dept}</span>
-                    <ChevronDown size={14} className="text-gray-400 shrink-0" />
+                    <X size={17} />
                   </button>
-                  {deptOpen && (
-                    <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 w-52 py-1">
-                      {departments.map((d) => (
-                        <button
-                          key={d}
-                          onClick={() => { setDept(d); setDeptOpen(false); }}
-                          className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 hover:text-[#1a7a1a] transition-colors ${
-                            dept === d ? "text-[#1a7a1a] font-semibold bg-green-50" : "text-gray-700"
-                          }`}
-                        >
-                          {d}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                )}
+                <button
+                  type="submit"
+                  className="inline-flex shrink-0 items-center gap-3 rounded-full bg-[#087d3e] px-6 py-3.5 text-base font-bold text-white shadow-sm transition-all hover:bg-[#066c35] hover:shadow-md"
+                >
+                  <span>Tìm kiếm</span>
+                  <ArrowRight size={21} strokeWidth={2.5} />
+                </button>
               </div>
-            </div>
 
-            {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {displayed.map((emp) => (
-                <EmployeeCard key={emp.id} emp={emp} onClick={() => setSelected(emp)} />
-              ))}
-            </div>
-
-            {displayed.length === 0 && (
-              <div className="text-center py-20 text-gray-400">
-                <p className="text-lg">Không tìm thấy nhân viên phù hợp</p>
-              </div>
-            )}
-
-            <p className="text-sm text-gray-400 mt-6">
-              Hiển thị <span className="font-semibold text-[#1a7a1a]">{displayed.length}</span> / {employees.length} nhân viên
-            </p>
-          </>
-        )}
-      </div>
-
-      {/* ── Employee Detail Modal ── */}
-      {selected && (
-        <div
-          className="fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4"
-          onClick={() => setSelected(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Green header */}
-            <div className="wana-gradient px-6 pt-8 pb-12 relative">
-              <button
-                onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 text-white/70 hover:text-white"
-              >
-                <X size={20} />
-              </button>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full border-4 border-[#f5c800] overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={selected.avatar} alt={selected.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-xl">{selected.name}</h3>
-                  <p className="text-[#f5c800] text-sm">{selected.position}</p>
-                  <span className="text-white/70 text-xs">{selected.department}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Body */}
-            <div className="px-6 py-5 -mt-6 bg-white rounded-t-2xl relative">
-              <div className="space-y-3">
-                {[
-                  { icon: Mail, label: "Email", value: selected.email },
-                  { icon: Phone, label: "Số điện thoại", value: selected.phone },
-                  { icon: MapPin, label: "Địa điểm", value: selected.location },
-                  { icon: Briefcase, label: "Phòng ban", value: selected.department },
-                  { icon: Cake, label: "Ngày sinh", value: selected.birthday },
-                  { icon: Calendar, label: "Ngày vào công ty", value: selected.joinDate },
-                ].map(({ icon: Icon, label, value }) => (
-                  <div key={label} className="flex items-center gap-3 py-2 border-b border-gray-50">
-                    <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center shrink-0">
-                      <Icon size={15} className="text-[#1a7a1a]" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-400">{label}</p>
-                      <p className="text-sm font-medium text-gray-800">{value}</p>
-                    </div>
+              <div ref={departmentMenuRef} className="relative shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setDepartmentOpen((open) => !open)}
+                  className="flex w-full min-w-60 items-center gap-3 rounded-full border border-green-100 bg-[#fbfffc] px-5 py-4 text-base transition-colors hover:border-[#1a7a1a] xl:w-72"
+                >
+                  <Grid2X2 size={23} className="shrink-0 text-[#087d3e]" />
+                  <span className="flex-1 truncate text-left font-medium text-gray-700">{department}</span>
+                  <ChevronDown size={19} className="shrink-0 text-gray-800" />
+                </button>
+                {departmentOpen && (
+                  <div className="absolute right-0 top-full z-20 mt-2 w-56 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+                    {departments.map((item) => (
+                      <button
+                        type="button"
+                        key={item}
+                        onClick={() => {
+                          setDepartment(item);
+                          setDepartmentOpen(false);
+                        }}
+                        className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-green-50 hover:text-[#1a7a1a] ${
+                          department === item ? "bg-green-50 font-semibold text-[#1a7a1a]" : "text-gray-700"
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
+            </form>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {previewEmployees.map((employee, index) => (
+                <EmployeeCard key={employee.id} employee={employee} image={previewAvatars[index]} />
+              ))}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </section>
   );
 }
 
-/* ── Employee Card ── portrait photo style */
 function EmployeeCard({
-  emp,
-  onClick,
+  employee,
+  image,
 }: {
-  emp: (typeof employees)[0];
-  onClick: () => void;
+  employee: (typeof employees)[number];
+  image: string;
 }) {
   return (
-    <div
-      onClick={onClick}
-      className="bg-white border border-gray-100 rounded-2xl overflow-hidden cursor-pointer shadow-sm card-hover"
+    <Link
+      href={`/employees?search=${encodeURIComponent(employee.name)}`}
+      className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
     >
-      {/* Portrait photo */}
-      <div className="w-full aspect-[3/4] bg-gray-100 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={emp.avatar}
-          alt={emp.name}
-          className="w-full h-full object-cover object-top"
+      <div className="relative aspect-[4/3] overflow-hidden bg-green-50">
+        <Image
+          src={image}
+          alt={`Chân dung ${employee.name}`}
+          fill
+          sizes="(min-width: 1280px) 220px, (min-width: 640px) 45vw, 100vw"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-
-      {/* Info */}
-      <div className="p-3">
-        <p className="font-bold text-gray-900 text-sm leading-tight">{emp.name}</p>
-        <p className="text-gray-400 text-xs mt-0.5 mb-2">{emp.position}</p>
-
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <span className="text-[#1a7a1a]">🏢</span>
-            <span className="truncate">{emp.department}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <Mail size={11} className="text-[#1a7a1a] shrink-0" />
-            <span className="truncate">{emp.email}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <Phone size={11} className="text-[#1a7a1a] shrink-0" />
-            <span>{emp.phone}</span>
-          </div>
+      <div className="p-4">
+        <p className="text-sm font-bold leading-tight text-gray-900">{employee.name}</p>
+        <p className="mt-1 min-h-10 text-xs leading-snug text-gray-500">{employee.position}</p>
+        <div className="mt-3 space-y-1.5 text-xs text-gray-500">
+          <p className="flex items-center gap-1.5"><Users size={12} className="shrink-0 text-[#1a7a1a]" />{employee.department}</p>
+          <p className="flex items-center gap-1.5"><Mail size={12} className="shrink-0 text-[#1a7a1a]" /><span className="truncate">{employee.email}</span></p>
+          <p className="flex items-center gap-1.5"><Phone size={12} className="shrink-0 text-[#1a7a1a]" />{employee.phone}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

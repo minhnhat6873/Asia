@@ -24,7 +24,7 @@ export default function StatsSection() {
               Những con số biết nói
             </p>
             <h2 className="text-white text-3xl md:text-4xl font-black leading-tight mb-3">
-              Wana luôn tiến về phía trước
+              Á Châu luôn tiến về phía trước
             </h2>
             <p className="text-white/70 text-sm">
               Cùng nhau tạo ra những giá trị tốt đẹp hơn mỗi ngày.

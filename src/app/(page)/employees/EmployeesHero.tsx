@@ -1,0 +1,57 @@
+﻿import Image from "next/image";
+import { Building2, LayoutGrid, Users } from "lucide-react";
+
+const highlights = [
+  { icon: Users, value: "500+", label: "Nhân viên" },
+  { icon: Building2, value: "12+", label: "Phòng ban" },
+  { icon: LayoutGrid, value: "3", label: "Văn phòng" },
+];
+
+export default function EmployeesHero() {
+  return (
+    <section className="relative h-75 overflow-hidden md:h-75">
+      <Image
+        src="/assets/images/employees-banner.png"
+        alt="Đội ngũ Asia Food & Beverage"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+        style={{ objectPosition: "70% center" }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0d5c0d_0%,#0d5c0d_25%,rgba(13,92,13,0.85)_35%,rgba(13,92,13,0.5)_50%,rgba(13,92,13,0.15)_65%,transparent_80%)]" />
+
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6">
+        <div className="flex w-full items-center justify-between gap-6">
+          <div className="max-w-md">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f5c800]">Con người Á Châu</p>
+            <h1 className="mb-2 text-2xl font-black leading-snug text-white md:text-3xl">
+              Cùng nhau tạo nên<br />
+              <span className="text-[#f5c800]">những điều tuyệt vời</span>
+            </h1>
+            <p className="mb-4 max-w-sm text-xs leading-relaxed text-white/80">
+              Mỗi thành viên là một mảnh ghép quan trọng trong hành trình phát triển của Á Châu.
+            </p>
+            <div className="flex items-center gap-5">
+              {highlights.map(({ icon: Icon, value, label }) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <Icon size={16} className="shrink-0 text-[#f5c800]" />
+                  <div>
+                    <p className="text-sm font-black leading-none text-white">{value}</p>
+                    <p className="text-[10px] text-white/55">{label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden max-w-40 rounded-xl border border-white/15 bg-[#0d5c0d]/60 px-4 py-3 text-right backdrop-blur-sm lg:block">
+            <span className="text-3xl font-black leading-none text-[#f5c800]">&ldquo;</span>
+            <p className="-mt-1 text-xs leading-snug text-white">Con người là trái tim của Á Châu</p>
+            <div className="ml-auto mt-2 h-0.5 w-6 rounded-full bg-[#f5c800]" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

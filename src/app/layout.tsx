@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wana Internal Portal",
-  description: "Cổng thông tin nội bộ Wana Beverage – Growing Together",
+  title: "Asia Internal Portal",
+  description: "Cổng thông tin nội bộ Asia Food & Beverage",
 };
 
 export default function RootLayout({

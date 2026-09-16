@@ -5,13 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import InternalSystemsMenu from "./InternalSystemsMenu";
 
 const navLinks = [
   { href: "/", label: "Trang chủ" },
   { href: "/employees", label: "Nhân viên" },
   { href: "/news", label: "Truyền thông" },
   { href: "/welcome", label: "Chào mừng" },
-  { href: "/about-wana", label: "Về Wana" },
+  { href: "/about-wana", label: "Về Á Châu" },
 ];
 
 export default function Navbar() {
@@ -37,8 +38,11 @@ export default function Navbar() {
 
           </Link>
 
+
+
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-1">
+            <nav className="flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -58,7 +62,9 @@ export default function Navbar() {
                 </Link>
               );
             })}
-          </nav>
+            </nav>
+            <InternalSystemsMenu />
+          </div>
 
           {/* Right side */}
           <div className="flex items-center gap-3">

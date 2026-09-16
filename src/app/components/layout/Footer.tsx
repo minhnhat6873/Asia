@@ -6,7 +6,7 @@ const footerLinks = [
   { label: "Nhân viên", href: "/employees" },
   { label: "Truyền thông", href: "/news" },
   { label: "Chào mừng", href: "/welcome" },
-  { label: "Về Wana", href: "/about-wana" },
+  { label: "Về Á Châu", href: "/about-wana" },
 ];
 
 const supportLinks = [
@@ -29,7 +29,7 @@ export default function Footer() {
             <p className="text-white/60 text-xs leading-relaxed">
               Kết nối • Phát triển<br />
               Cổng thông tin nội bộ dành cho toàn thể<br />
-              cán bộ nhân viên Wana Beverage.
+              cán bộ nhân viên Á Châu Food & Beverage.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-white/40 text-xs">
-            © 2026 Wana Beverage. All rights reserved.
+            © 2026 Asia Food & Beverage. All rights reserved.
           </p>
           <p className="text-white/40 text-xs">
             Phiên bản Demo v1.0 — Dữ liệu hiển thị chỉ mang tính minh họa

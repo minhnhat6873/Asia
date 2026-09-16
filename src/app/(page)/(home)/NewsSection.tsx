@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { news, newsCategories, NewsItem } from "@/config/news";
 import { ArrowRight, X, Calendar, User, ChevronRight } from "lucide-react";
@@ -27,23 +28,27 @@ export default function NewsSection({ preview = false }: Props) {
   const displayed = preview ? filtered.filter((n) => n.featured).slice(0, 3) : filtered;
 
   return (
-    <section className={`py-12 ${preview ? "bg-gray-50" : "bg-white"}`}>
+    <section className="bg-white py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="section-label mb-1">Wana Stories</p>
-            <h2 className="text-3xl font-black text-gray-900">Tin tức & Truyền thông</h2>
-            <p className="text-gray-500 text-sm mt-1">
-              Cập nhật hoạt động, sự kiện và câu chuyện mới nhất tại Wana.
+        <div className="mb-9 flex items-end justify-between gap-6 md:mb-10">
+          <div className="max-w-2xl">
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.34em] text-[#16894a] md:text-sm">
+              Á Châu Stories
+            </p>
+            <h2 className="text-4xl font-black leading-[1.05] tracking-[-0.035em] text-[#073d37] md:text-[2.75rem] lg:text-5xl">
+              Tin tức &amp; Truyền thông
+            </h2>
+            <p className="mt-4 max-w-xl text-base font-medium leading-relaxed text-slate-500 md:text-lg">
+              Cập nhật những hoạt động, sự kiện và câu chuyện<br className="hidden md:block" /> mới nhất tại Á Châu.
             </p>
           </div>
           {preview && (
             <Link
               href="/news"
-              className="flex items-center gap-1 text-sm font-semibold text-[#1a7a1a] hover:underline shrink-0"
+              className="mb-1 inline-flex shrink-0 items-center gap-3 text-base font-bold text-[#0c5743] transition-colors hover:text-[#16894a] md:text-lg"
             >
-              Xem tất cả <ArrowRight size={14} />
+              Xem tất cả <ArrowRight size={22} strokeWidth={2.5} />
             </Link>
           )}
         </div>
@@ -68,25 +73,25 @@ export default function NewsSection({ preview = false }: Props) {
         )}
 
         {/* News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {displayed.map((item) => (
+        <div className={`grid grid-cols-1 gap-5 ${preview ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+          {displayed.map((item, index) => (
             <div
               key={item.id}
               onClick={() => setSelectedNews(item)}
-              className="relative rounded-2xl overflow-hidden h-64 cursor-pointer group shadow-md card-hover"
+              className={`group relative h-64 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl ${preview && index === 0 ? "md:col-span-2" : ""}`}
             >
-              {/* Background image */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={item.image}
                 alt={item.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes={preview && index === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               {/* Overlay */}
               <div className="news-overlay absolute inset-0" />
 
               {/* Content */}
-              <div className="absolute inset-0 p-5 flex flex-col justify-between">
+              <div className="absolute inset-0 flex flex-col justify-between p-5">
                 {/* Top: badge */}
                 <div>
                   <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-semibold ${categoryBadgeClass[item.category]}`}>
@@ -96,7 +101,7 @@ export default function NewsSection({ preview = false }: Props) {
 
                 {/* Bottom: title + date */}
                 <div>
-                  <h3 className="text-white font-bold text-sm leading-snug mb-2 line-clamp-2">
+                  <h3 className={`mb-2 line-clamp-2 font-bold leading-snug text-white ${preview && index === 0 ? "text-lg" : "text-sm"}`}>
                     {item.title}
                   </h3>
                   <div className="flex items-center justify-between">

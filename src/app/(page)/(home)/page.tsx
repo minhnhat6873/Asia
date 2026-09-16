@@ -3,7 +3,6 @@ import HeroBanner from "./HeroBanner";
 import QuickLinks from "./QuickLinks";
 import EmployeeSection from "./EmployeeSection";
 import NewsSection from "./NewsSection";
-import StatsSection from "./StatsSection";
 import Footer from "@/app/components/layout/Footer";
 
 export default function HomePage() {
@@ -12,9 +11,8 @@ export default function HomePage() {
       <Navbar />
       <HeroBanner />
       <QuickLinks />
-      <EmployeeSection preview={true} />
+      <EmployeeSection />
       <NewsSection preview={true} />
-      <StatsSection />
       <Footer />
     </main>
   );
