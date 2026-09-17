@@ -214,7 +214,11 @@ export default function NewsSection({ preview = false }: Props) {
                 {newsCategories.map((category) => {
                   const Icon = categoryIcons[category] ?? Newspaper;
                   const isActive = activeCategory === category;
-                  const count = news.filter((item) => category === "Tất cả" || item.category === category).length;
+                  // Only the chip matching the active category carries a number.
+                  // Its value is the result count after applying BOTH the category
+                  // and the search keyword, so searching rewrites the badge on the
+                  // chip that is currently selected.
+                  const showCount = activeCategory === category;
                   return (
                     <button
                       key={category}
@@ -225,12 +229,14 @@ export default function NewsSection({ preview = false }: Props) {
                     >
                       <Icon size={17} aria-hidden="true" />
                       {category}
-                      <span
-                        aria-label={`${count} bài viết`}
-                        className={`flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[11px] font-bold ${isActive ? "bg-white/20 text-white" : "bg-white text-slate-500"}`}
-                      >
-                        {count}
-                      </span>
+                      {showCount && (
+                        <span
+                          aria-label={`${sortedItems.length} bài viết`}
+                          className={`flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[11px] font-bold ${isActive ? "bg-white/20 text-white" : "bg-white text-slate-500"}`}
+                        >
+                          {sortedItems.length}
+                        </span>
+                      )}
                     </button>
                   );
                 })}
