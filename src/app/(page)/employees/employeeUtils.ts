@@ -1,6 +1,9 @@
 import type { Employee } from "@/config/employees";
 
 export function getEmployeeAvatar(employee: Employee) {
+  if (employee.avatar && employee.avatar !== "/assets/images/default-avatar.png") {
+    return employee.avatar;
+  }
   return employee.id <= 7 ? `/assets/images/employee-${employee.id}.png` : "/assets/images/default-avatar.png";
 }
 

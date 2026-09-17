@@ -26,14 +26,14 @@ export const departments = [
 export const employees: Employee[] = [
   {
     id: 1,
-    name: "Nguyễn Văn A",
-    position: "Software Developer",
+    name: "Phạm An Khánh",
+    position: "IT",
     department: "Phòng IT",
     email: "nguyenvana@wana.com",
     phone: "0901 234 567",
     birthday: "15/03/1995",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/avatar-Khanh.png",
     joinDate: "01/06/2022",
   },
   {
@@ -45,7 +45,7 @@ export const employees: Employee[] = [
     phone: "0902 345 678",
     birthday: "22/07/1990",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-2.png",
     joinDate: "15/03/2019",
   },
   {
@@ -57,7 +57,7 @@ export const employees: Employee[] = [
     phone: "0903 456 789",
     birthday: "08/11/1993",
     location: "Hà Nội",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-3.png",
     joinDate: "10/01/2021",
   },
   {
@@ -69,7 +69,7 @@ export const employees: Employee[] = [
     phone: "0904 567 890",
     birthday: "30/04/1992",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-4.png",
     joinDate: "20/08/2020",
   },
   {
@@ -81,7 +81,7 @@ export const employees: Employee[] = [
     phone: "0905 678 901",
     birthday: "12/09/1988",
     location: "Đà Nẵng",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-5.png",
     joinDate: "05/11/2017",
   },
   {
@@ -93,7 +93,7 @@ export const employees: Employee[] = [
     phone: "0906 789 012",
     birthday: "18/02/1991",
     location: "Bình Dương",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-6.png",
     joinDate: "01/04/2018",
   },
   {
@@ -105,7 +105,7 @@ export const employees: Employee[] = [
     phone: "0907 890 123",
     birthday: "05/06/1975",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "01/01/2010",
   },
   {
@@ -117,7 +117,7 @@ export const employees: Employee[] = [
     phone: "0908 901 234",
     birthday: "25/12/1994",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-4.png",
     joinDate: "15/07/2021",
   },
   {
@@ -129,7 +129,7 @@ export const employees: Employee[] = [
     phone: "0909 012 345",
     birthday: "14/08/1996",
     location: "Hà Nội",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-5.png",
     joinDate: "01/09/2022",
   },
   {
@@ -141,7 +141,7 @@ export const employees: Employee[] = [
     phone: "0910 123 456",
     birthday: "03/01/1997",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/default-avatar.png",
+    avatar: "/assets/images/employee-6.png",
     joinDate: "20/03/2023",
   },
   {
@@ -153,8 +153,7 @@ export const employees: Employee[] = [
     phone: "0911 234 567",
     birthday: "19/05/1998",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=LyVanL&backgroundColor=c0aede",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "10/06/2023",
   },
   {
@@ -166,8 +165,7 @@ export const employees: Employee[] = [
     phone: "0912 345 678",
     birthday: "11/10/1985",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=PhanThiM&backgroundColor=d1f4e0",
+    avatar: "/assets/images/employee-4.png",
     joinDate: "01/01/2015",
   },
   {
@@ -179,8 +177,7 @@ export const employees: Employee[] = [
     phone: "0913 456 789",
     birthday: "27/07/1993",
     location: "Bình Dương",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=DuongVanN&backgroundColor=b6e3f4",
+    avatar: "/assets/images/employee-5.png",
     joinDate: "05/05/2020",
   },
   {
@@ -192,8 +189,7 @@ export const employees: Employee[] = [
     phone: "0914 567 890",
     birthday: "09/03/1995",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=ToThiO&backgroundColor=ffd5dc",
+    avatar: "/assets/images/employee-6.png",
     joinDate: "15/02/2022",
   },
   {
@@ -205,8 +201,7 @@ export const employees: Employee[] = [
     phone: "0915 678 901",
     birthday: "21/11/1978",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=HaMinhP&backgroundColor=c0aede",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "01/03/2012",
   },
   {
@@ -218,8 +213,7 @@ export const employees: Employee[] = [
     phone: "0916 789 012",
     birthday: "14/06/1989",
     location: "Hà Nội",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=ChuThiQ&backgroundColor=d1f4e0",
+    avatar: "/assets/images/employee-4.png",
     joinDate: "01/08/2019",
   },
   {
@@ -231,8 +225,7 @@ export const employees: Employee[] = [
     phone: "0917 890 123",
     birthday: "06/04/1987",
     location: "Bình Dương",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=DinhVanR&backgroundColor=b6e3f4",
+    avatar: "/assets/images/employee-5.png",
     joinDate: "20/10/2016",
   },
   {
@@ -244,8 +237,7 @@ export const employees: Employee[] = [
     phone: "0918 901 234",
     birthday: "31/08/1991",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=LuuThiS&backgroundColor=ffd5dc",
+    avatar: "/assets/images/employee-6.png",
     joinDate: "01/02/2021",
   },
   {
@@ -257,8 +249,7 @@ export const employees: Employee[] = [
     phone: "0919 012 345",
     birthday: "16/12/1982",
     location: "Bình Dương",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=VuongVanT&backgroundColor=c0aede",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "15/05/2014",
   },
   {
@@ -270,8 +261,7 @@ export const employees: Employee[] = [
     phone: "0920 123 456",
     birthday: "02/09/1980",
     location: "Hồ Chí Minh",
-    avatar:
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=MaiThiU&backgroundColor=d1f4e0",
+    avatar: "/assets/images/employee-4.png",
     joinDate: "01/06/2011",
   },
 ];

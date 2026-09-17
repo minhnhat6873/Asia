@@ -120,9 +120,8 @@ export default function EmployeeSection() {
                           setDepartment(item);
                           setDepartmentOpen(false);
                         }}
-                        className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-green-50 hover:text-[#1a7a1a] ${
-                          department === item ? "bg-green-50 font-semibold text-[#1a7a1a]" : "text-gray-700"
-                        }`}
+                        className={`w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-green-50 hover:text-[#1a7a1a] ${department === item ? "bg-green-50 font-semibold text-[#1a7a1a]" : "text-gray-700"
+                          }`}
                       >
                         {item}
                       </button>

@@ -269,49 +269,49 @@ export default function NewsSection({ preview = false }: Props) {
           <FeaturedEvent item={featuredEvent} onSelect={() => { setActiveCategory(featuredEvent.category); setSelectedNews(featuredEvent); }} />
         )}
         <div className={showDetailPanel ? "grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]" : ""}>
-        <div className={`grid grid-cols-1 gap-5 ${preview ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
-          {gridItems.map((item, index) => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedNews(item)}
-              className={`group relative h-64 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl ${preview && index === 0 ? "md:col-span-2" : ""}`}
-            >
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                sizes={preview && index === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* Overlay */}
-              <div className="news-overlay absolute inset-0" />
+          <div className={`grid grid-cols-1 gap-5 ${preview ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+            {gridItems.map((item, index) => (
+              <div
+                key={item.id}
+                onClick={() => setSelectedNews(item)}
+                className={`group relative h-64 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl ${preview && index === 0 ? "md:col-span-2" : ""}`}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes={preview && index === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {/* Overlay */}
+                <div className="news-overlay absolute inset-0" />
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-between p-5">
-                {/* Top: badge */}
-                <div>
-                  <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-semibold ${categoryBadgeClass[item.category]}`}>
-                    {item.category}
-                  </span>
-                </div>
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-between p-5">
+                  {/* Top: badge */}
+                  <div>
+                    <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-semibold ${categoryBadgeClass[item.category]}`}>
+                      {item.category}
+                    </span>
+                  </div>
 
-                {/* Bottom: title + date */}
-                <div>
-                  <h3 className={`mb-2 line-clamp-2 font-bold leading-snug text-white ${preview && index === 0 ? "text-lg" : "text-sm"}`}>
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/70 text-xs">{item.date}</span>
-                    <div className="w-7 h-7 bg-[#f5c800] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ChevronRight size={14} className="text-gray-900" />
+                  {/* Bottom: title + date */}
+                  <div>
+                    <h3 className={`mb-2 line-clamp-2 font-bold leading-snug text-white ${preview && index === 0 ? "text-lg" : "text-sm"}`}>
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/70 text-xs">{item.date}</span>
+                      <div className="w-7 h-7 bg-[#f5c800] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ChevronRight size={14} className="text-gray-900" />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        {showDetailPanel && selectedItem && <NewsDetailPanel item={selectedItem} />}
+            ))}
+          </div>
+          {showDetailPanel && selectedItem && <NewsDetailPanel item={selectedItem} />}
         </div>
 
         {/* No results */}
