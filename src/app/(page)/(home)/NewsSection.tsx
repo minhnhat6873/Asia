@@ -4,11 +4,100 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { news, newsCategories, NewsItem } from "@/config/news";
-import { ArrowRight, X, Calendar, User, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, User, ChevronRight, Search, ArrowDownUp, LayoutGrid, Newspaper, Users, Megaphone, X } from "lucide-react";
 
 interface Props {
   preview?: boolean;
 }
+
+function SearchBox({ query, onChange }: { query: string; onChange: (value: string) => void }) {
+  return (
+    <form
+      onSubmit={(event) => event.preventDefault()}
+      role="search"
+      aria-label="Tìm kiếm tin tức"
+      className="flex w-full min-w-0 items-center rounded-2xl bg-white p-1.5 shadow-sm ring-1 ring-[#dbe9e0] transition focus-within:ring-2 focus-within:ring-[#16894a] lg:max-w-xl"
+    >
+      <Search size={20} aria-hidden="true" className="mx-2 shrink-0 text-[#0d7c49] sm:mx-3" />
+      <input
+        type="search"
+        value={query}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder="Bạn muốn tìm tin gì?"
+        aria-label="Từ khóa tin tức"
+        className="w-full min-w-0 flex-1 bg-transparent py-2.5 text-sm text-[#16241a] outline-none placeholder:text-slate-400"
+      />
+      <button type="submit" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#087a43] px-3 text-sm font-bold text-white transition-colors hover:bg-[#066838] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087a43] sm:px-5">
+        Tìm kiếm <ArrowRight size={16} aria-hidden="true" className="hidden sm:block" />
+      </button>
+    </form>
+  );
+}
+
+function FeaturedEvent({ item, onSelect }: { item: NewsItem; onSelect: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className="group mb-12 grid w-full cursor-pointer grid-cols-1 items-center gap-6 text-left md:grid-cols-[1.1fr_1fr]"
+    >
+      <div className="relative h-80 overflow-hidden rounded-xl md:h-[420px]">
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          priority
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <div className="md:pr-6">
+        <span className={`mb-3 inline-block text-xs font-semibold ${categoryBadgeClass[item.category]}`}>
+          {item.category}
+        </span>
+        <h3 className="mb-3 text-3xl font-black leading-tight text-[#16241a] md:text-4xl">{item.title}</h3>
+        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-500">{item.excerpt}</p>
+        <div className="flex items-center gap-4 text-xs text-gray-400">
+          <span className="flex items-center gap-1"><Calendar size={12} /> {item.date}</span>
+          <span className="flex items-center gap-1"><User size={12} /> {item.author}</span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function NewsDetailPanel({ item }: { item: NewsItem }) {
+  return (
+    <aside className="self-start overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:sticky xl:top-6">
+      <div className="relative h-44">
+        <Image src={item.image} alt={item.title} fill sizes="360px" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
+        <span className={`absolute bottom-3 left-4 text-xs px-2.5 py-1 rounded-full font-semibold ${categoryBadgeClass[item.category]}`}>
+          {item.category}
+        </span>
+      </div>
+      <div className="p-5">
+        <h3 className="text-xl font-black leading-snug text-[#16241a]">{item.title}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-slate-500">{item.excerpt}</p>
+        <div className="mt-5 border-t border-slate-100 pt-4 text-sm">
+          <div className="flex items-center gap-2 text-slate-400"><Calendar size={15} /> <span>{item.date}</span></div>
+          <div className="mt-3 flex items-center gap-2 text-slate-400"><User size={15} /> <span>{item.author}</span></div>
+        </div>
+        <div className="mt-5 rounded-xl bg-[#eff9f1] p-3 text-xs leading-relaxed text-[#287348]">
+          {item.content}
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+const categoryIcons: Record<string, typeof LayoutGrid> = {
+  "Tất cả": LayoutGrid,
+  "Sự kiện": Calendar,
+  "Tin tức": Newspaper,
+  "Nhân sự": Users,
+  "Thông báo": Megaphone,
+};
 
 const categoryBadgeClass: Record<string, string> = {
   "Sự kiện": "badge-event",
@@ -19,6 +108,8 @@ const categoryBadgeClass: Record<string, string> = {
 
 export default function NewsSection({ preview = false }: Props) {
   const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
 
   const filtered = news.filter(
@@ -26,20 +117,71 @@ export default function NewsSection({ preview = false }: Props) {
   );
 
   const displayed = preview ? filtered.filter((n) => n.featured).slice(0, 3) : filtered;
+  const searched = displayed.filter((item) => {
+    const query = searchQuery.trim().toLocaleLowerCase();
+    return !query || item.title.toLocaleLowerCase().includes(query) || item.excerpt.toLocaleLowerCase().includes(query);
+  });
+  const sortedItems = [...searched].sort((first, second) => {
+    const toTimestamp = (value: string) => {
+      const [day, month, year] = value.split("/");
+      return new Date(`${year}-${month}-${day}`).getTime();
+    };
+    const difference = toTimestamp(second.date) - toTimestamp(first.date);
+    return sortOrder === "newest" ? difference : -difference;
+  });
+  const isSearching = searchQuery.trim() !== "";
+  // While searching we drop the hero-style featured card so every result sits in
+  // the grid and can open the detail panel on the right.
+  const showFeatured = !preview && !isSearching && activeCategory === newsCategories[0];
+  const featuredEvent = showFeatured
+    ? sortedItems.find((item) => categoryBadgeClass[item.category] === "badge-event") ?? null
+    : null;
+  const gridItems = featuredEvent ? sortedItems.filter((item) => item.id !== featuredEvent.id) : sortedItems;
+  const showDetailPanel = !preview && !showFeatured && sortedItems.length > 0;
+  const selectedItem = selectedNews && sortedItems.some((item) => item.id === selectedNews.id)
+    ? selectedNews
+    : sortedItems[0] ?? null;
 
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className={preview ? "bg-white py-12 md:py-16" : "bg-white pb-12 md:pb-16"}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="mb-9 flex items-end justify-between gap-6 md:mb-10">
+        {!preview && (
+          <div className="relative left-1/2 mb-8 h-[260px] w-screen -translate-x-1/2 overflow-hidden md:h-[340px]">
+            <Image
+              src="/assets/images/truyenthong1.png"
+              alt="Tin tức và truyền thông"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: "60% center" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
+            <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6">
+              <div className="max-w-[430px]">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#f5c800] sm:text-xs">
+                  Asia Stories
+                </p>
+                <h1 className="mt-2 text-3xl font-black leading-[1.08] tracking-[-0.035em] text-white sm:text-4xl md:text-5xl">
+                  Asia Food &amp; Beverage
+                </h1>
+                <p className="mt-3 text-xl font-black leading-tight text-[#f5c800] sm:text-2xl md:text-3xl">
+                  Tin tức &amp; Truyền thông
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className={preview ? "mb-9 flex items-end justify-between gap-6 md:mb-10" : "hidden"}>
           <div className="max-w-2xl">
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.34em] text-[#16894a] md:text-sm">
-              Á Châu Stories
+              Wana Stories
             </p>
             <h2 className="text-4xl font-black leading-[1.05] tracking-[-0.035em] text-[#073d37] md:text-[2.75rem] lg:text-5xl">
               Tin tức &amp; Truyền thông
             </h2>
-            <p className="mt-4 max-w-xl text-base font-medium leading-relaxed text-slate-500 md:text-lg">
+            <p className={preview ? "mt-4 max-w-xl text-base font-medium leading-relaxed text-slate-500 md:text-lg" : "hidden"}>
               Cập nhật những hoạt động, sự kiện và câu chuyện<br className="hidden md:block" /> mới nhất tại Á Châu.
             </p>
           </div>
@@ -52,29 +194,77 @@ export default function NewsSection({ preview = false }: Props) {
             </Link>
           )}
         </div>
-
-        {/* Category tabs (full page only) */}
+        {/* News discovery menu (full page only) */}
         {!preview && (
-          <div className="flex gap-2 flex-wrap mb-8">
-            {newsCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat
-                    ? "bg-[#1a7a1a] text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-green-50 hover:text-[#1a7a1a]"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="mb-9 overflow-hidden rounded-3xl bg-white shadow-[0_12px_40px_-16px_rgba(7,61,55,0.18)] ring-1 ring-[#dce9e1]">
+            <div className="flex flex-col gap-5 bg-gradient-to-br from-[#edf7ef] via-[#f7faf7] to-white p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+              <div className="flex items-center gap-3.5">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#073d37] text-[#f5c800] shadow-sm">
+                  <Newspaper size={23} aria-hidden="true" />
+                </span>
+                <div>
+                  <h2 className="text-lg font-extrabold tracking-tight text-[#073d37] sm:text-xl">Khám phá tin tức</h2>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500 sm:text-sm">Kết nối với những câu chuyện tại Á Châu</p>
+                </div>
+              </div>
+              <SearchBox query={searchQuery} onChange={setSearchQuery} />
+            </div>
+            <div className="px-5 pb-4 pt-5 sm:px-6">
+              <div role="group" aria-label="Danh mục tin tức" className="flex flex-wrap gap-2">
+                {newsCategories.map((category) => {
+                  const Icon = categoryIcons[category] ?? Newspaper;
+                  const isActive = activeCategory === category;
+                  const count = news.filter((item) => category === "Tất cả" || item.category === category).length;
+                  return (
+                    <button
+                      key={category}
+                      type="button"
+                      aria-pressed={isActive}
+                      onClick={() => setActiveCategory(category)}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087a43] sm:gap-2.5 sm:px-4 ${isActive ? "bg-[#087a43] text-white shadow-[0_4px_12px_rgba(8,122,67,0.18)]" : "bg-[#f5f7f6] text-slate-600 hover:bg-[#edf7ef] hover:text-[#087a43]"}`}
+                    >
+                      <Icon size={17} aria-hidden="true" />
+                      {category}
+                      <span
+                        aria-label={`${count} bài viết`}
+                        className={`flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-[11px] font-bold ${isActive ? "bg-white/20 text-white" : "bg-white text-slate-500"}`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+                <span aria-hidden="true" className="mx-1 hidden h-6 w-px self-center bg-[#e2ebe5] sm:block" />
+                <button
+                  type="button"
+                  onClick={() => setSortOrder((current) => current === "newest" ? "oldest" : "newest")}
+                  aria-pressed={sortOrder === "oldest"}
+                  aria-label={`Sắp xếp theo ngày đăng: ${sortOrder === "newest" ? "Mới nhất" : "Cũ nhất"}. Bấm để đổi thứ tự.`}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#f5f7f6] px-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-[#edf7ef] hover:text-[#087a43] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087a43] sm:gap-2.5 sm:px-4"
+                >
+                  <ArrowDownUp size={17} aria-hidden="true" className="text-[#087a43]" />
+                  {sortOrder === "newest" ? "Mới nhất" : "Cũ nhất"}
+                </button>
+                {(searchQuery !== "" || activeCategory !== "Tất cả") && (
+                  <button
+                    type="button"
+                    onClick={() => { setSearchQuery(""); setActiveCategory("Tất cả"); }}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#f5f7f6] px-3 text-sm font-semibold text-[#087a43] transition-colors hover:bg-[#edf7ef] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087a43] sm:gap-2.5 sm:px-4"
+                  >
+                    <X size={17} aria-hidden="true" /> Xóa bộ lọc
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         )}
-
         {/* News Grid */}
+        {featuredEvent && (
+          <FeaturedEvent item={featuredEvent} onSelect={() => { setActiveCategory(featuredEvent.category); setSelectedNews(featuredEvent); }} />
+        )}
+        <div className={showDetailPanel ? "grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]" : ""}>
         <div className={`grid grid-cols-1 gap-5 ${preview ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
-          {displayed.map((item, index) => (
+          {gridItems.map((item, index) => (
             <div
               key={item.id}
               onClick={() => setSelectedNews(item)}
@@ -115,64 +305,18 @@ export default function NewsSection({ preview = false }: Props) {
             </div>
           ))}
         </div>
+        {showDetailPanel && selectedItem && <NewsDetailPanel item={selectedItem} />}
+        </div>
 
         {/* No results */}
-        {displayed.length === 0 && (
+        {searched.length === 0 && (
           <div className="text-center py-16 text-gray-400">
             <p>Không có bài viết nào trong danh mục này</p>
           </div>
         )}
 
-        {/* Result count (full page) */}
-        {!preview && (
-          <p className="text-sm text-gray-500 mt-6">
-            Hiển thị <span className="font-semibold text-[#1a7a1a]">{displayed.length}</span> bài viết
-          </p>
-        )}
       </div>
 
-      {/* News Detail Modal */}
-      {selectedNews && (
-        <div
-          className="fixed inset-0 bg-black/60 modal-backdrop z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedNews(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image */}
-            <div className="relative h-56">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={selectedNews.image} alt={selectedNews.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <button
-                onClick={() => setSelectedNews(null)}
-                className="absolute top-4 right-4 w-8 h-8 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center"
-              >
-                <X size={16} />
-              </button>
-              <span className={`absolute bottom-4 left-4 text-xs px-2.5 py-1 rounded-full font-semibold ${categoryBadgeClass[selectedNews.category]}`}>
-                {selectedNews.category}
-              </span>
-            </div>
-
-            {/* Content */}
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-3">{selectedNews.title}</h2>
-              <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
-                <span className="flex items-center gap-1">
-                  <Calendar size={12} /> {selectedNews.date}
-                </span>
-                <span className="flex items-center gap-1">
-                  <User size={12} /> {selectedNews.author}
-                </span>
-              </div>
-              <p className="text-gray-700 text-sm leading-relaxed">{selectedNews.content}</p>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
