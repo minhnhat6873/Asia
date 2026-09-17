@@ -50,8 +50,8 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={`relative px-4 py-2 text-base font-medium transition-all ${isActive
-                        ? "text-[#1a7a1a] font-semibold"
-                        : "text-gray-600 hover:text-[#1a7a1a]"
+                      ? "text-[#1a7a1a] font-semibold"
+                      : "text-gray-600 hover:text-[#1a7a1a]"
                       }`}
                   >
                     {link.label}
@@ -62,7 +62,7 @@ export default function Navbar() {
                 );
               })}
             </nav>
-            {/* <InternalSystemsMenu  /> */}
+            <InternalSystemsMenu />
           </div>
 
           {/* Right side */}
