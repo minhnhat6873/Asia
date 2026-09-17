@@ -23,7 +23,7 @@ export default function EmployeeProfile({ employee }: { employee: Employee }) {
         </div>
         <div className="min-w-0 pt-4">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-medium text-[#159447]"><span className="h-2 w-2 rounded-full bg-[#16b85c]" />Đang làm việc</span>
-          <h2 className="mt-3 truncate text-lg font-black text-slate-800">{employee.name}</h2>
+          <h2 className="mt-3 break-words text-lg font-black leading-snug text-slate-800">{employee.name}</h2>
           <p className="mt-1 text-sm text-slate-500">{employee.position}</p>
           <p className="mt-1 text-xs text-slate-400">{employee.department}</p>
         </div>
@@ -31,9 +31,7 @@ export default function EmployeeProfile({ employee }: { employee: Employee }) {
 
       <div className="flex border-b border-slate-100 text-xs font-semibold text-slate-400">
         <button type="button" className="border-b-2 border-[#159447] px-2 py-3 text-[#08723d]">Thông tin chung</button>
-        <button type="button" className="px-2 py-3">Công việc</button>
-        <button type="button" className="px-2 py-3">Liên hệ</button>
-        <button type="button" className="px-2 py-3">Lịch sử</button>
+        <button type="button" className="px-2 py-3">Mô tả</button>
       </div>
 
       <dl className="space-y-2.5 py-4">
@@ -45,10 +43,6 @@ export default function EmployeeProfile({ employee }: { employee: Employee }) {
           </div>
         ))}
       </dl>
-
-      <blockquote className="rounded-xl bg-gradient-to-r from-green-50 to-[#eef8f0] px-4 py-3 text-xs italic leading-relaxed text-[#28704d]">
-        Kết nối con người, chia sẻ giá trị, cùng nhau phát triển.
-      </blockquote>
     </aside>
   );
 }

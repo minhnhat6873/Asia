@@ -143,8 +143,8 @@ export default function NewsSection({ preview = false }: Props) {
     : sortedItems[0] ?? null;
 
   return (
-    <section className={preview ? "bg-white py-12 md:py-16" : "bg-white pb-12 md:pb-16"}>
-      <div className="max-w-7xl mx-auto px-6">
+    <section className={preview ? "bg-white py-8 sm:py-12 xl:py-16" : "bg-white pb-8 sm:pb-12 xl:pb-16"}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         {!preview && (
           <div className="relative left-1/2 mb-8 h-[260px] w-screen -translate-x-1/2 overflow-hidden md:h-[340px]">
@@ -173,22 +173,22 @@ export default function NewsSection({ preview = false }: Props) {
             </div>
           </div>
         )}
-        <div className={preview ? "mb-9 flex items-end justify-between gap-6 md:mb-10" : "hidden"}>
+        <div className={preview ? "mb-7 flex flex-col items-start gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between sm:gap-6" : "hidden"}>
           <div className="max-w-2xl">
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.34em] text-[#16894a] md:text-sm">
+            <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#16894a] sm:mb-3 sm:text-xs">
               Wana Stories
             </p>
-            <h2 className="text-4xl font-black leading-[1.05] tracking-[-0.035em] text-[#073d37] md:text-[2.75rem] lg:text-5xl">
+            <h2 className="text-3xl font-black leading-[1.05] tracking-[-0.035em] text-[#073d37] sm:text-4xl xl:text-5xl">
               Tin tức &amp; Truyền thông
             </h2>
-            <p className={preview ? "mt-4 max-w-xl text-base font-medium leading-relaxed text-slate-500 md:text-lg" : "hidden"}>
+            <p className={preview ? "mt-3 max-w-xl text-sm font-medium leading-relaxed text-slate-500 sm:mt-4 sm:text-base xl:text-lg" : "hidden"}>
               Cập nhật những hoạt động, sự kiện và câu chuyện<br className="hidden md:block" /> mới nhất tại Á Châu.
             </p>
           </div>
           {preview && (
             <Link
               href="/news"
-              className="mb-1 inline-flex shrink-0 items-center gap-3 text-base font-bold text-[#0c5743] transition-colors hover:text-[#16894a] md:text-lg"
+              className="inline-flex shrink-0 items-center gap-2 text-sm font-bold sm:mb-1 sm:gap-3 sm:text-base text-[#0c5743] transition-colors hover:text-[#16894a] md:text-lg"
             >
               Xem tất cả <ArrowRight size={22} strokeWidth={2.5} />
             </Link>
@@ -269,12 +269,12 @@ export default function NewsSection({ preview = false }: Props) {
           <FeaturedEvent item={featuredEvent} onSelect={() => { setActiveCategory(featuredEvent.category); setSelectedNews(featuredEvent); }} />
         )}
         <div className={showDetailPanel ? "grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]" : ""}>
-          <div className={`grid grid-cols-1 gap-5 ${preview ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+          <div className={`grid grid-cols-1 gap-4 sm:gap-5 ${preview ? "md:grid-cols-2 xl:grid-cols-4" : "md:grid-cols-3"}`}>
             {gridItems.map((item, index) => (
               <div
                 key={item.id}
                 onClick={() => setSelectedNews(item)}
-                className={`group relative h-64 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl ${preview && index === 0 ? "md:col-span-2" : ""}`}
+                className={`group relative h-56 sm:h-64 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl ${preview && index === 0 ? "xl:col-span-2" : ""}`}
               >
                 <Image
                   src={item.image}

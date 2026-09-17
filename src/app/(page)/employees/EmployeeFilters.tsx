@@ -13,6 +13,7 @@ import {
   Laptop,
   Megaphone,
   Search,
+  RotateCcw,
   Truck,
   UserRound,
   UsersRound,
@@ -31,6 +32,8 @@ interface EmployeeFiltersProps {
   onDepartmentChange: (value: string) => void;
   onPositionChange: (value: string) => void;
   onToggleSort: () => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
 }
 
 const positionCounts = employees.reduce<Record<string, number>>((counts, employee) => {
@@ -81,7 +84,7 @@ function DepartmentFilter({
         type="button"
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
-        className={`flex min-h-14 w-full items-center gap-2.5 rounded-xl border bg-white px-4 py-3 text-left shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors ${
+        className={`flex min-h-14 w-full items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-left sm:px-4 sm:py-3 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors ${
           open ? "border-[#29a96a] ring-1 ring-[#29a96a]" : "border-slate-200 hover:border-[#29a96a]"
         }`}
       >
@@ -164,7 +167,7 @@ function PositionFilter({
         type="button"
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
-        className={`flex min-h-14 w-full items-center gap-2.5 rounded-xl border bg-white px-4 py-3 text-left shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors ${
+        className={`flex min-h-14 w-full items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-left sm:px-4 sm:py-3 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors ${
           open ? "border-[#29a96a] ring-1 ring-[#29a96a]" : "border-slate-200 hover:border-[#29a96a]"
         }`}
       >
@@ -219,19 +222,26 @@ export default function EmployeeFilters({
   onDepartmentChange,
   onPositionChange,
   onToggleSort,
+  hasActiveFilters,
+  onClearFilters,
 }: EmployeeFiltersProps) {
   return (
-    <form onSubmit={(event) => event.preventDefault()} className="grid gap-4 lg:grid-cols-[minmax(380px,2.6fr)_minmax(165px,0.9fr)_minmax(165px,0.9fr)_auto]">
-      <label className="flex min-h-14 min-w-0 items-center gap-3 rounded-xl border border-slate-200 bg-white py-1.5 pl-4 pr-1.5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors focus-within:border-[#16894a]">
+    <form onSubmit={(event) => event.preventDefault()} className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 xl:grid-cols-[minmax(380px,2.6fr)_minmax(165px,0.9fr)_minmax(165px,0.9fr)_auto_auto]">
+      <label className="col-span-2 flex min-h-12 min-w-0 items-center gap-3 rounded-xl border border-slate-200 bg-white py-1.5 pl-3 pr-1.5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors focus-within:border-[#16894a] sm:pl-4 md:col-span-3 xl:col-span-1 xl:min-h-14">
         <Search size={20} className="shrink-0 text-[#08723d]" />
-        <input type="search" value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Tìm kiếm theo tên, phòng ban, chức vụ..." className="min-w-0 flex-1 bg-transparent py-3 text-sm text-slate-800 outline-none placeholder:text-slate-400" />
-        <button type="submit" className="shrink-0 rounded-lg bg-[#08723d] px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#065f33]">Tìm kiếm</button>
+        <input type="search" value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Tìm kiếm theo tên, phòng ban, chức vụ..." className="min-w-0 flex-1 bg-transparent py-2.5 text-xs text-slate-800 outline-none placeholder:text-slate-400 sm:py-3 sm:text-sm" />
+        <button type="submit" className="shrink-0 rounded-lg bg-[#08723d] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-[#065f33] sm:px-6 sm:py-3 sm:text-sm">Tìm kiếm</button>
       </label>
       <DepartmentFilter value={department} departments={departments} onChange={onDepartmentChange} />
       <PositionFilter value={position} positions={positions} onChange={onPositionChange} />
-      <button type="button" onClick={onToggleSort} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-600 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors hover:border-[#16894a] hover:text-[#08723d]">
+      <button type="button" onClick={onToggleSort} className="col-span-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-600 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-colors hover:border-[#16894a] hover:text-[#08723d] sm:px-5 sm:py-3 sm:text-sm md:col-span-1 xl:min-h-14">
         <ArrowDownUp size={17} className="text-[#08723d]" />{newestFirst ? "Mới nhất" : "Cũ nhất"}<span className="sr-only">Đổi thứ tự ngày gia nhập</span>
       </button>
+      {hasActiveFilters && (
+        <button type="button" onClick={onClearFilters} className="col-span-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-green-100 bg-green-50 px-4 py-2.5 text-xs font-bold text-[#08723d] shadow-[0_2px_8px_rgba(15,73,45,0.06)] transition-colors hover:bg-green-100 sm:px-5 sm:py-3 sm:text-sm md:col-span-2 xl:col-span-1 xl:min-h-14">
+          <RotateCcw size={17} /> Xóa tất cả bộ lọc
+        </button>
+      )}
     </form>
   );
 }

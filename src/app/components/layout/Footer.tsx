@@ -18,12 +18,12 @@ const supportLinks = [
 export default function Footer() {
   return (
     <footer className="bg-[#0d5c0d] text-white">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="grid grid-cols-2 gap-7 md:grid-cols-3 md:gap-8">
           {/* Brand */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <div className="bg-white rounded-xl p-2 inline-block mb-4">
-              <Image src="/assets/images/asia-logo.png" alt="Asia Food & Beverage JSC" width={64} height={64} className="h-16 w-16 object-contain" />
+              <Image src="/assets/images/asia-logo.png" alt="Asia Food & Beverage JSC" width={64} height={64} className="h-12 w-12 sm:h-16 sm:w-16 object-contain" />
             </div>
             <p className="text-[#f5c800] font-bold text-sm mb-1">ASIA FOOD &amp; BEVERAGE JSC</p>
             <p className="text-white/60 text-xs leading-relaxed">
@@ -73,7 +73,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="mt-7 flex flex-col gap-2 border-t border-white/10 pt-5 text-center sm:mt-8 sm:pt-6 md:flex-row md:text-left items-center justify-between gap-3">
           <p className="text-white/40 text-xs">
             © 2026 Asia Food & Beverage. All rights reserved.
           </p>

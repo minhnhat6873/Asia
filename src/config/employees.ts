@@ -45,7 +45,7 @@ export const employees: Employee[] = [
     phone: "0902 345 678",
     birthday: "22/07/1990",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/employee-2.png",
+    avatar: "/assets/images/employee-5.png",
     joinDate: "15/03/2019",
   },
   {
@@ -57,7 +57,7 @@ export const employees: Employee[] = [
     phone: "0903 456 789",
     birthday: "08/11/1993",
     location: "Hà Nội",
-    avatar: "/assets/images/employee-3.png",
+    avatar: "/assets/images/employee-6.png",
     joinDate: "10/01/2021",
   },
   {
@@ -69,7 +69,7 @@ export const employees: Employee[] = [
     phone: "0904 567 890",
     birthday: "30/04/1992",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/employee-4.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "20/08/2020",
   },
   {
@@ -117,7 +117,7 @@ export const employees: Employee[] = [
     phone: "0908 901 234",
     birthday: "25/12/1994",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/employee-4.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "15/07/2021",
   },
   {
@@ -165,7 +165,7 @@ export const employees: Employee[] = [
     phone: "0912 345 678",
     birthday: "11/10/1985",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/employee-4.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "01/01/2015",
   },
   {
@@ -213,7 +213,7 @@ export const employees: Employee[] = [
     phone: "0916 789 012",
     birthday: "14/06/1989",
     location: "Hà Nội",
-    avatar: "/assets/images/employee-4.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "01/08/2019",
   },
   {
@@ -261,7 +261,7 @@ export const employees: Employee[] = [
     phone: "0920 123 456",
     birthday: "02/09/1980",
     location: "Hồ Chí Minh",
-    avatar: "/assets/images/employee-4.png",
+    avatar: "/assets/images/employee-7.png",
     joinDate: "01/06/2011",
   },
 ];
