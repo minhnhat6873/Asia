@@ -59,13 +59,12 @@ export default function InternalSystemsMenu() {
         onClick={() => setOpen((current) => !current)}
         aria-expanded={open}
         aria-haspopup="menu"
-        className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-base font-semibold transition-colors ${
-          open
+        className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-base font-semibold transition-colors ${open
             ? "border-[#1a7a1a] bg-green-50 text-[#0d5c0d]"
             : "border-transparent text-[#0d5c0d] hover:border-green-100 hover:bg-green-50"
-        }`}
+          }`}
       >
-        Hệ thống nội bộ
+        Hệ thống nội bộ Wana
         <ChevronDown size={15} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
