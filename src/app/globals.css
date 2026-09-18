@@ -140,3 +140,37 @@ body {
 .modal-backdrop {
   backdrop-filter: blur(4px);
 }
+
+/* Profile carousel slide transition */
+@keyframes profile-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes profile-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.profile-in-right {
+  animation: profile-in-right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.profile-in-left {
+  animation: profile-in-left 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-in-right,
+  .profile-in-left {
+    animation: none;
+  }
+}
