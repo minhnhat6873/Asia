@@ -46,10 +46,9 @@ export default function EmployeesHero() {
             </div>
           </div>
 
-          <div className="hidden max-w-40 rounded-xl border border-white/15 bg-[#0d5c0d]/60 px-4 py-3 text-right backdrop-blur-sm lg:block">
-            <span className="text-3xl font-black leading-none text-[#f5c800]">&ldquo;</span>
-            <p className="-mt-1 text-xs leading-snug text-white">Con người là trái tim của Á Châu</p>
-            <div className="ml-auto mt-2 h-0.5 w-6 rounded-full bg-[#f5c800]" />
+          <div className="hidden max-w-40 rounded-xl border border-white/15 bg-[#0d5c0d]/60 px-4 py-3 text-center backdrop-blur-sm lg:block">
+            <p className="text-xs leading-snug text-white">Con người là trái tim của Á Châu</p>
+            <div className="mx-auto mt-2 h-0.5 w-6 rounded-full bg-[#f5c800]" />
           </div>
         </div>
       </div>

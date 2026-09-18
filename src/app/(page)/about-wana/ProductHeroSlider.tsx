@@ -30,7 +30,6 @@ export default function ProductHeroSlider() {
   const prev = () => setCurrent((c) => (c - 1 + slides.length) % slides.length);
   const next = () => setCurrent((c) => (c + 1) % slides.length);
   const slide = slides[current];
-  const previous = (current - 1 + slides.length) % slides.length;
   const following = (current + 1) % slides.length;
 
   const cupLayerStyle = (index: number) => {
@@ -39,11 +38,11 @@ export default function ProductHeroSlider() {
     const offset = isActive ? 0 : isNext ? 145 : -145;
 
     return {
-      bottom: isActive ? "-10px" : "14px",
+      bottom: isActive ? "-5px" : "22px",
       filter: isActive
         ? "drop-shadow(0 15px 35px rgba(0,0,0,0.3))"
         : "blur(1px) saturate(0.8) drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
-      height: isActive ? "340px" : "255px",
+      height: isActive ? "clamp(220px, 28vw, 340px)" : "clamp(170px, 21vw, 255px)",
       opacity: isActive ? 1 : 0.5,
       transform: `translateX(calc(-50% + ${offset}px)) scale(${isActive ? 1 : 0.82})`,
       zIndex: isActive ? 30 : 20,
@@ -52,10 +51,9 @@ export default function ProductHeroSlider() {
 
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative h-[380px] overflow-hidden sm:h-[400px] xl:h-[380px]"
       style={{
         background: "linear-gradient(135deg, #1a8e8e 0%, #2aaeae 30%, #1a9696 60%, #0d7a7a 100%)",
-        height: "380px",
       }}
     >
       {/* -- Watermark -- */}
@@ -65,7 +63,7 @@ export default function ProductHeroSlider() {
       >
         <span
           className="font-black text-white/[0.06] leading-none tracking-tight whitespace-nowrap"
-          style={{ fontSize: "180px", marginLeft: "40px" }}
+          style={{ fontSize: "clamp(100px, 18vw, 180px)", marginLeft: "24px" }}
         >
           GOOD TEA
         </span>
@@ -94,30 +92,30 @@ export default function ProductHeroSlider() {
       </svg>
 
       {/* -- Main content -- */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-12 h-full flex items-center">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 sm:px-8 xl:px-12">
         {/* LEFT: text + button + nav */}
-        <div className="flex flex-col justify-center shrink-0" style={{ maxWidth: "380px" }}>
+        <div className="relative z-20 flex w-[60%] max-w-[380px] flex-col justify-center shrink-0 sm:w-[56%] xl:w-auto" >
           <p className="text-white/70 text-[11px] font-bold tracking-[0.2em] uppercase mb-3">
             {slide.label}
           </p>
           <h2
             className="text-white font-black leading-[1.05] mb-0.5"
-            style={{ fontSize: "clamp(2.2rem, 5vw, 3.2rem)" }}
+            style={{ fontSize: "clamp(1.75rem, 5vw, 3.2rem)" }}
           >
             {slide.title}
           </h2>
           <h2
             className="text-white/80 font-black leading-[1.05] mb-5 italic"
-            style={{ fontSize: "clamp(2.2rem, 5vw, 3.2rem)" }}
+            style={{ fontSize: "clamp(1.75rem, 5vw, 3.2rem)" }}
           >
             {slide.subtitle}
           </h2>
-          <p className="text-white/70 text-[13px] leading-relaxed mb-6 max-w-[320px]">
+          <p className="mb-5 max-w-[210px] text-[11px] leading-relaxed text-white/70 sm:mb-6 sm:max-w-[320px] sm:text-[13px]">
             {slide.desc}
           </p>
 
-          <div className="mb-7">
-            <button className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/35 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all backdrop-blur-sm">
+          <div className="mb-5 sm:mb-7">
+            <button className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/35 px-4 py-2 text-xs font-semibold text-white sm:px-6 sm:py-2.5 sm:text-sm rounded-full transition-all backdrop-blur-sm">
               Khám phá ngay <ArrowRight size={14} />
             </button>
           </div>
@@ -126,13 +124,13 @@ export default function ProductHeroSlider() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={prev}
-              className="w-9 h-9 rounded-full border border-white/30 hover:border-white text-white/70 hover:text-white flex items-center justify-center transition-all"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-white/30 hover:border-white text-white/70 hover:text-white flex items-center justify-center transition-all"
             >
               <ChevronLeft size={16} />
             </button>
             <button
               onClick={next}
-              className="w-9 h-9 rounded-full border border-white/30 hover:border-white text-white/70 hover:text-white flex items-center justify-center transition-all"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-white/30 hover:border-white text-white/70 hover:text-white flex items-center justify-center transition-all"
             >
               <ChevronRight size={16} />
             </button>
@@ -155,7 +153,7 @@ export default function ProductHeroSlider() {
         </div>
 
         {/* CENTER: coconut-water-cup.png — transparent product shot */}
-        <div className="flex-1 self-stretch relative min-w-0">
+        <div className="absolute inset-y-0 right-[-24px] w-[58%] min-w-0 self-stretch sm:right-0 sm:w-[52%] xl:relative xl:inset-auto xl:w-auto xl:flex-1">
           {slides.map((product, index) => {
             const isActive = index === current;
 
@@ -175,7 +173,7 @@ export default function ProductHeroSlider() {
         </div>
 
         {/* RIGHT: Tagline + badge */}
-        <div className="hidden lg:flex flex-col items-end gap-8 shrink-0 max-w-[170px]">
+        <div className="hidden xl:flex flex-col items-end gap-8 shrink-0 max-w-[170px]">
           <div className="text-right">
             <p
               className="text-white/90 text-xl leading-snug"

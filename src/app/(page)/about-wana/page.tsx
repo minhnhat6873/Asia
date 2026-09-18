@@ -3,7 +3,7 @@
 import Navbar from "@/app/components/layout/Navbar";
 import Footer from "@/app/components/layout/Footer";
 import ProductHeroSlider from "./ProductHeroSlider";
-import { ArrowRight, Play, Trophy, Globe, Users, Leaf, Diamond, Heart, Lightbulb, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Play, Trophy, Globe, Users, Leaf } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,29 +14,6 @@ const stats = [
   { icon: Trophy, value: "10+", label: "Thương hiệu sản phẩm" },
   { icon: Globe, value: "20+", label: "Quốc gia" },
   { icon: Leaf, value: "1", label: "Đội ngũ vững mạnh" },
-];
-
-const values = [
-  {
-    icon: Diamond,
-    title: "Chất lượng là nền tảng",
-    desc: "Đảm bảo an toàn, tối ưu sức khỏe người dùng.",
-  },
-  {
-    icon: Users,
-    title: "Con người là sức mạnh",
-    desc: "Bồi dưỡng tài năng, chuyển nghiệp, luôn cùng nhau vượt khó.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Sáng tạo không ngừng",
-    desc: "Liên tục đổi mới để tạo ra những sản phẩm dẫn đầu xu hướng.",
-  },
-  {
-    icon: Heart,
-    title: "Vì cộng đồng",
-    desc: "Đóng góp vào cuộc sống bền vững và nâng cao chất lượng sống.",
-  },
 ];
 
 const milestones = [
@@ -94,7 +71,7 @@ export default function VeWanaPage() {
       {/* ══════════════════════════════════
           1. HERO — about-wana.png, single gradient
          ══════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ height: "340px" }}>
+      <section className="relative h-[300px] overflow-hidden sm:h-[340px]">
 
         {/* Full-width about-wana photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -114,29 +91,29 @@ export default function VeWanaPage() {
         />
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 h-full flex items-center">
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 sm:px-6">
           <div className="w-full flex items-center justify-between">
 
             {/* LEFT: text */}
             <div className="max-w-lg">
-              <p className="text-[#f5c800] text-xs font-bold tracking-widest uppercase mb-4">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#f5c800] sm:mb-4 sm:text-xs">
                 About Wana
               </p>
-              <h1 className="text-white text-4xl md:text-5xl font-black leading-tight mb-4">
+              <h1 className="mb-3 text-3xl font-black leading-tight text-white sm:mb-4 sm:text-4xl xl:text-5xl">
                 HÀNH TRÌNH<br />
                 <span className="text-[#f5c800]">PHÁT TRIỂN</span>
               </h1>
-              <p className="text-white/75 text-sm mb-6 leading-relaxed max-w-sm">
+              <p className="mb-5 max-w-[260px] text-xs leading-relaxed text-white/75 sm:mb-6 sm:max-w-sm sm:text-sm">
                 Cùng nhau tạo ra những sản phẩm tốt hơn vì một cuộc sống khỏe mạnh và bền vững hơn.
               </p>
-              <button className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all backdrop-blur-sm">
+              <button className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 text-xs font-semibold text-white px-4 py-2 sm:px-5 sm:py-2.5 sm:text-sm rounded-full transition-all backdrop-blur-sm">
                 <Play size={14} className="fill-white" />
                 Xem video giới thiệu
               </button>
             </div>
 
             {/* RIGHT: Company card */}
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <div
                 className="rounded-2xl p-5 text-center max-w-[200px]"
                 style={{
@@ -163,21 +140,21 @@ export default function VeWanaPage() {
       {/* ══════════════════════════════════
           2. ABOUT — White, 2 columns
          ══════════════════════════════════ */}
-      <section className="py-10 md:py-14 bg-white">
+      <section className="bg-white py-8 sm:py-10 xl:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="relative isolate overflow-hidden rounded-[26px] bg-white px-6 py-8 sm:px-8 md:px-10 lg:px-10 lg:py-10">
+          <div className="relative isolate overflow-hidden rounded-[26px] bg-white px-0 py-3 sm:px-8 sm:py-8 md:px-10 lg:px-10 lg:py-10">
 
-            <div className="relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+            <div className="relative z-10 grid grid-cols-1 items-center gap-7 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
               <div className="max-w-[540px]">
                 <p className="section-label mb-2">Về chúng tôi</p>
-                <h2 className="text-2xl font-black leading-[1.18] text-slate-900 sm:text-[2rem] lg:text-[2.15rem]">
+                <h2 className="text-2xl font-black leading-[1.18] text-slate-900 sm:text-[2rem] xl:text-[2.15rem]">
                   Wana – Không chỉ là đồ uống,<br />
                   <span className="text-[#16812a]">mà là cuộc sống tốt đẹp hơn</span>
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-slate-500 lg:text-[0.95rem]">
+                <p className="mt-5 text-sm leading-relaxed text-slate-500 xl:text-[0.95rem]">
                   Công ty Cổ phần nước giải khát Wana được thành lập với sứ mệnh mang đến những sản phẩm đồ uống chất lượng, an toàn và tốt cho sức khỏe, đáp ứng nhu cầu ngày càng cao của người tiêu dùng trong và ngoài nước.
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-500 lg:text-[0.95rem]">
+                <p className="mt-4 text-sm leading-relaxed text-slate-500 xl:text-[0.95rem]">
                   Chúng tôi không ngừng đổi mới, sáng tạo và mở rộng, hướng đến trở thành thương hiệu đồ uống được yêu thích và tin tưởng hàng đầu tại Việt Nam.
                 </p>
                 <Link
@@ -188,7 +165,7 @@ export default function VeWanaPage() {
                 </Link>
               </div>
 
-              <div className="relative min-h-[245px] overflow-hidden rounded-[20px] shadow-[0_14px_30px_rgba(26,55,32,0.12)] sm:min-h-[300px] lg:min-h-[340px]">
+              <div className="relative min-h-[245px] overflow-hidden rounded-[20px] shadow-[0_14px_30px_rgba(26,55,32,0.12)] sm:min-h-[300px] xl:min-h-[340px]">
                 <img
                   src="/assets/images/workplace.png"
                   alt="Không gian làm việc Wana"
@@ -200,7 +177,7 @@ export default function VeWanaPage() {
           </div>
 
           {/* Stats bar */}
-          <div className="mt-10 grid grid-cols-2 gap-6 border-t border-gray-100 pt-8 md:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-4 border-t border-gray-100 pt-6 sm:mt-10 sm:gap-6 sm:pt-8 md:grid-cols-4">
             {stats.map((s) => {
               const Icon = s.icon;
               return (
@@ -209,7 +186,7 @@ export default function VeWanaPage() {
                     <Icon size={20} className="text-[#1a7a1a]" />
                   </div>
                   <div>
-                    <p className="text-2xl font-black text-[#1a7a1a]">{s.value}</p>
+                    <p className="text-xl font-black text-[#1a7a1a] sm:text-2xl">{s.value}</p>
                     <p className="text-xs text-gray-500">{s.label}</p>
                   </div>
                 </div>
@@ -232,30 +209,30 @@ export default function VeWanaPage() {
       {/* ══════════════════════════════════
           4. TIMELINE — White
          ══════════════════════════════════ */}
-      <section className="bg-white py-14 md:py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[320px_1fr] lg:gap-14">
+      <section className="bg-white py-8 sm:py-12 xl:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid grid-cols-1 gap-8 xl:grid-cols-[320px_1fr] xl:gap-14">
             <div className="pt-2">
               <p className="section-label mb-3">Hành trình phát triển</p>
-              <h2 className="text-3xl font-black leading-tight text-gray-900 md:text-4xl">
+              <h2 className="text-2xl font-black leading-tight text-gray-900 sm:text-3xl xl:text-4xl">
                 Từ hôm nay đến<br />
                 <span className="text-[#1a7a1a]">tương lai</span>
               </h2>
-              <p className="mt-6 text-sm leading-relaxed text-gray-500">
+              <p className="mt-4 text-sm leading-relaxed text-gray-500 sm:mt-6">
                 Mỗi cột mốc là một bước tiến, đánh dấu sự nỗ lực không ngừng của Wana trong hành trình mang những sản phẩm tốt hơn đến với cộng đồng.
               </p>
               <Link
                 href="#"
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#056a57] px-6 py-3 text-sm font-semibold text-[#d7ee46] transition-colors hover:bg-[#045847]"
+                className="mt-5 inline-flex sm:mt-7 items-center gap-2 rounded-full bg-[#056a57] px-6 py-3 text-sm font-semibold text-[#d7ee46] transition-colors hover:bg-[#045847]"
               >
                 Xem lịch sử <ArrowRight size={15} />
               </Link>
             </div>
 
             <div className="min-w-0">
-              <div className="relative pt-1">
+              <div className="relative overflow-x-auto pt-1 pb-2">
                 <div className="absolute left-5 right-5 top-6 h-0.5 bg-[#d9e5dc]" />
-                <div className="relative grid grid-cols-5 gap-2">
+                <div className="relative grid min-w-[560px] grid-cols-5 gap-2">
                   {milestones.map((milestone, index) => {
                     const isActive = index === activeMilestone;
 
@@ -284,7 +261,7 @@ export default function VeWanaPage() {
                 </div>
               </div>
 
-              <div className="mt-8 grid overflow-hidden rounded-2xl bg-[linear-gradient(100deg,#ffffff_0%,#f0f9f0_100%)] shadow-[0_10px_28px_rgba(22,91,35,0.1)] md:grid-cols-[320px_1fr]">
+              <div className="mt-5 grid overflow-hidden sm:mt-8 rounded-2xl bg-[linear-gradient(100deg,#ffffff_0%,#f0f9f0_100%)] shadow-[0_10px_28px_rgba(22,91,35,0.1)] md:grid-cols-[320px_1fr]">
                 <div className="relative min-h-[190px]">
                   <img
                     src={selectedMilestone.image}
@@ -292,7 +269,7 @@ export default function VeWanaPage() {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </div>
-                <div className="p-6 md:p-7">
+                <div className="p-4 sm:p-6 md:p-7">
                   <p className="text-xl font-black text-[#16812a]">{selectedMilestone.year}</p>
                   <h3 className="mt-1 text-xl font-black text-gray-900">{selectedMilestone.event}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-gray-500">{selectedMilestone.desc}</p>
@@ -306,12 +283,12 @@ export default function VeWanaPage() {
       {/* ══════════════════════════════════
           6. GALLERY — White
          ══════════════════════════════════ */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-end justify-between mb-8">
+      <section className="bg-white py-8 sm:py-12 xl:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-5 flex items-end justify-between gap-4 sm:mb-8">
             <div>
               <p className="section-label mb-2">Hình ảnh hoạt động</p>
-              <h2 className="text-3xl font-black text-gray-900">
+              <h2 className="text-2xl font-black text-gray-900 sm:text-3xl">
                 Một Wana <span className="text-[#1a7a1a]">năng động</span>
               </h2>
             </div>
@@ -324,9 +301,9 @@ export default function VeWanaPage() {
           </div>
 
           {/* Gallery grid: 1 large + 4 small */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
             {/* Large first item */}
-            <div className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden h-56 group">
+            <div className="col-span-2 row-span-1 relative overflow-hidden rounded-2xl h-40 group sm:h-56">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={gallery[0].src}
@@ -339,7 +316,7 @@ export default function VeWanaPage() {
 
             {/* Remaining 4 items */}
             {gallery.slice(1).map((g) => (
-              <div key={g.label} className="relative rounded-2xl overflow-hidden h-56 group">
+              <div key={g.label} className="relative overflow-hidden rounded-2xl h-40 group sm:h-56">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={g.src}
@@ -363,23 +340,23 @@ export default function VeWanaPage() {
 function GrowingTogetherBanner() {
   return (
     <section className="w-full">
-      <div className="relative isolate min-h-[260px] overflow-hidden md:min-h-[320px]">
+      <div className="relative isolate min-h-[280px] overflow-hidden sm:min-h-[320px]">
         <img
           src="/assets/images/company-growth.png"
           alt="Growing Together"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.86)_37%,rgba(255,255,255,0.24)_62%,rgba(255,255,255,0.02)_100%)]" />
-        <div className="relative z-10 flex min-h-[260px] items-center px-7 py-10 sm:px-10 md:min-h-[320px] lg:px-16">
+        <div className="relative z-10 flex min-h-[280px] items-center px-4 py-8 sm:min-h-[320px] sm:px-10 sm:py-10 lg:px-16">
           <div className="max-w-[440px]">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#16812a]">
               Wana – Growing Together
             </p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-slate-900 md:text-4xl">
+            <h2 className="mt-3 text-2xl font-black leading-tight text-slate-900 sm:text-3xl md:text-4xl">
               Cùng nhau kiến tạo<br />
               những giá trị tốt đẹp hơn
             </h2>
-            <p className="mt-5 text-sm leading-relaxed text-slate-600 md:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base">
               Vì một cộng đồng khỏe mạnh, một thế hệ năng động và một tương lai bền vững.
             </p>
             <Link
@@ -411,13 +388,13 @@ function FeaturedProductBanner() {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-2xl mx-4 lg:mx-8 my-6">
+    <section className="relative mx-4 my-5 h-[360px] overflow-hidden rounded-2xl sm:my-6 sm:h-auto lg:mx-8">
       {/* Image displayed at full natural size — NOT cropped */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/assets/images/coconut-calamansi.png"
         alt="Wana Coconut Calamansi"
-        className="w-full block"
+        className="h-full w-full object-cover sm:h-auto sm:object-contain"
       />
 
       {/* Overlay: white fade left for text */}
@@ -437,18 +414,18 @@ function FeaturedProductBanner() {
       />
 
       {/* Content sits on top */}
-      <div className="absolute inset-0 flex items-center px-8 lg:px-12">
+      <div className="absolute inset-0 flex items-center px-5 sm:px-8 lg:px-12">
         <div className="w-full flex items-center justify-between gap-4">
 
           {/* LEFT: text */}
-          <div className="max-w-[240px] shrink-0">
+          <div className="max-w-[190px] shrink-0 sm:max-w-[240px]">
             <p className="text-[#1a7a1a] text-[10px] font-bold tracking-widest uppercase mb-2">
               Sản phẩm tiêu biểu
             </p>
-            <h2 className="text-gray-900 text-2xl md:text-3xl font-black leading-tight mb-3">
+            <h2 className="mb-3 text-xl font-black leading-tight text-gray-900 sm:text-2xl md:text-3xl">
               Nước Dừa Tươi<br />Calamansi
             </h2>
-            <p className="text-gray-600 text-xs leading-relaxed mb-5 max-w-[200px]">
+            <p className="mb-4 max-w-[180px] text-[11px] leading-relaxed text-gray-600 sm:mb-5 sm:max-w-[200px] sm:text-xs">
               Sự kết hợp hoàn hảo giữa vị dừa tươi mát lành và hương calamansi thanh dịu, mang đến trải nghiệm tươi mới mỗi ngày.
             </p>
             <Link
@@ -463,7 +440,7 @@ function FeaturedProductBanner() {
           <div className="flex-1" />
 
           {/* RIGHT: feature list */}
-          <div className="hidden lg:flex flex-col gap-3 max-w-[210px] shrink-0">
+          <div className="hidden xl:flex flex-col gap-3 max-w-[210px] shrink-0">
             {features.map((f, i) => (
               <div key={i} className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-[#1a7a1a] rounded-full flex items-center justify-center shrink-0">
